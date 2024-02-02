@@ -33,7 +33,6 @@ class Bank{
             login();
             break;
         case 2:
-        cout << "create new";
             system("cls");
             signup();
             break;
