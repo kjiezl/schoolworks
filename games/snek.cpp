@@ -15,6 +15,7 @@ using namespace std;
     - custom snakes (head and tail char)
     - custom table width and height or option for map size
     - weird loop lines
+    - test change
 */
 
 const int width = 50;
