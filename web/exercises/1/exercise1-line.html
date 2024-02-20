@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Animate - Line</title>
+
+        <style>
+            #lineDiv{
+                font-size: 5em;
+                margin-top: 20%;
+                display:block;  
+            }
+        </style>
+
+        <script type="text/javascript">
+            thisLeft = 0;
+            moveID = 0;
+            width = document.documentElement.clientWidth;
+            state = 1;
+
+            function moveText(){
+                var thisText = document.querySelector('#lineDiv');
+
+                if(state == 1){
+                    thisLeft += 1;
+                } else if(state == 2){
+                    thisLeft -= 1;
+                }
+
+                if(state == 1 && thisLeft >= width - 580){
+                    state = 2;
+                } else if(state == 2 && thisLeft <= 0){
+                    state = 1;   
+                }
+
+                thisText.style.left = thisLeft + "px";
+            }
+
+            function moveLine(){
+                moveID = setInterval(moveText, 0.1);
+            }
+        </script>
+    </head>
+
+    <body onload="moveLine()">
+        <div>
+            <p id="lineDiv" style="position:relative;">
+                HELLO WORLD
+            </p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Animate - DVD</title>
+    </head>
+
+    <style>
+        #textDiv{
+            font-size: 5em;
+        }
+    </style>
+
+<script language="JavaScript" type="text/JavaScript">
+    var thisLeft = 0;
+    var thisTop = 0;
+    var moveID = 0;
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var state = 1;
+
+    var goLeft = false;
+    var goRight = true;
+    var goUp = false;
+    var goDown = true;
+
+    function moveText(){
+        var thisText = document.querySelector('#textDiv');
+
+        if(goRight && thisLeft >= width - 580){
+            goLeft = true;
+            goRight = false;
+        }
+
+        if(goDown && thisTop >= height - 100){
+            goUp = true;
+            goDown = false;
+        }
+
+        if(goLeft && thisLeft <= 0){
+            goRight = true;
+            goLeft = false;
+        }
+
+        if(goUp && thisTop <= -20){
+            goDown = true;
+            goUp = false;
+        }
+
+        if(goLeft){
+            thisLeft -= 1;
+        } else if(goRight){
+            thisLeft += 1;
+        }
+
+        if(goUp){
+            thisTop -= 1;
+        } else if(goDown){
+            thisTop += 1;
+        }
+
+        thisText.style.left=thisLeft +"px";
+        thisText.style.top=thisTop +"px";
+    }
+
+    function moveLine(){
+        moveID = setInterval(moveText, 0.1);
+    }
+</script>
+
+    <body onload="moveLine()">
+        <div>
+            <p id="textDiv" style="position:relative;">
+                HELLO WORLD
+            </p>
+        </div>
+    </body>
+</html>
