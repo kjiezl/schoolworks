@@ -8,12 +8,14 @@
                 padding: 0;
                 box-sizing: border-box;
                 font-family: monospace;
+                cursor: none;
             }
             body{
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 min-height: 100vh;
+                background: #111;
             }
             .circle{
                 position: relative;
@@ -24,19 +26,23 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                background: #111;
             }
             .text{
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 animation: rotateText 5s linear infinite;
+                color: #0f0;
             }
             @keyframes rotateText {
                 0%{
                     transform: rotate(0deg);
+                    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(0deg);
                 }
                 100%{
                     transform: rotate(360deg);
+                    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(360deg);
                 }
             }
             .text span{
@@ -51,7 +57,7 @@
     <body>
         <div class="circle">
             <div class="text">
-                <p>HELLO WORLD</p>
+                <p>HELLO ** WORLD ** </p>
             </div>
         </div>
 

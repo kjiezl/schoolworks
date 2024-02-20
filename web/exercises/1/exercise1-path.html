@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animate - Mouse Path</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+            cursor:default;
+            background-color: #111;
+        }
+
+        body:hover .moving-text{
+            opacity: 1;
+        }
+
+        #custom-path {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .moving-text {
+            position: absolute;
+            font-size: 3em;
+            font-family: Arial, sans-serif;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.25s;
+            color: #0f0;
+            animation: animateColor 5s linear infinite;
+        }
+
+        @keyframes animateColor{
+                0%{
+                    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(0deg);
+                }
+                100%{
+                    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(360deg);
+                }
+            }
+
+    </style>
+</head>
+<body>
+    <svg id="custom-path"></svg>
+    <div class="moving-text">HELLO WORLD</div>
+
+    <script>
+        const customPath = document.getElementById('custom-path');
+        const movingText = document.querySelector('.moving-text');
+        let path = '';
+        let textWidth = movingText.offsetWidth;
+        let textHeight = movingText.offsetHeight;
+        let fadeTimer;
+
+        function fadeOutTrail() {
+            const currentOpacity = parseFloat(window.getComputedStyle(customPath).getPropertyValue('opacity'));
+            if (currentOpacity > 0) {
+                customPath.style.opacity = currentOpacity - 0.02;
+            } else {
+                customPath.innerHTML = '';
+                path = '';
+            }
+        }
+
+
+        function startFadeOutTimer() {
+            clearInterval(fadeTimer);
+            fadeTimer = setInterval(fadeOutTrail, 5);
+        }
+
+        document.addEventListener('mousemove', (event) => {
+            clearInterval(fadeTimer);
+            customPath.style.opacity = 1;
+            startFadeOutTimer();
+            const x = event.clientX;
+            const y = event.clientY;
+            path += `${x},${y} `;
+            customPath.innerHTML = `<polyline points="${path}" fill="none" stroke="#222" stroke-width="2" />`;
+
+            setTimeout(() => {
+                movingText.style.left = x - textWidth / 2 + 'px';
+                movingText.style.top = y - textHeight / 2 + 'px';
+                movingText.style.opacity = 1; // Show the text
+            }, 800);
+        });
+
+        startFadeOutTimer();
+    </script>
+</body>
+</html>

@@ -3,10 +3,30 @@
         <title>Animate - Line</title>
 
         <style>
+            *{
+                margin: 0;
+                padding: 0;
+                cursor: none;
+            }
             #lineDiv{
                 font-size: 5em;
                 margin-top: 20%;
-                display:block;  
+                display:block;
+                color: #0f0;
+                animation: animateColor 5s linear infinite;
+            }
+
+            @keyframes animateColor{
+                0%{
+                    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(0deg);
+                }
+                100%{
+                    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(360deg);
+                }
+            }
+
+            body{
+                background: #111;
             }
         </style>
 
