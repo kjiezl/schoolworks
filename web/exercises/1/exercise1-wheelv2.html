@@ -1,0 +1,154 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <title>Animate - Wheel v2</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            min-height: 100vh;
+            background: #111;
+            overflow: hidden;
+        }
+
+        .text{
+            position: absolute;
+            font-size: 3em;
+            color: #0f0;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.25s;
+            animation: animateColor 5s linear infinite;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            user-select: none;
+        }
+
+        .text span{
+            position: absolute;
+            top: -200px;
+            font-weight: 400;
+            transform-origin: 0 200px;
+        }
+
+        .text::before{
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #0f0;
+            border-radius: 50%;
+            transform: translate(-25%, -25%);
+            cursor: pointer;
+        }
+
+        @keyframes animateColor{
+            0%{
+                filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(0deg);
+            }
+            100%{
+                filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="text">HELLO - STRANGE - WORLD - </h2>
+    <script type="text/javascript">
+        let text = document.querySelector('.text');
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+        let lastLeft = window.innerWidth / 2;
+        let lastTop = window.innerHeight;
+        let velocityX = 0;
+        let velocityY = 0;
+        const gravity = 0.5;
+        const friction = 0.9;
+        const horizontalVelocity = 1;
+        const velocityThreshold = 0.1;
+
+        text.innerHTML = text.textContent.replace(/\S/g, "<span>$&</span>");
+
+        let element = document.querySelectorAll('span');
+        for(let i = 0; i < element.length; i++){
+            element[i].style.transform = "rotate("+i * 18+"deg)";
+        }
+
+        document.addEventListener("mousedown", function(e){
+            if (e.target === text) {
+                isDragging = true;
+                offsetX = e.offsetX;
+                offsetY = e.offsetY;
+                velocityX = 0;
+                velocityY = 0;
+            }
+        });
+
+        document.addEventListener("mousemove", function(e){
+            if (isDragging) {
+                text.style.left = e.pageX - offsetX + 'px';
+                text.style.top = e.pageY - offsetY + 'px';
+                text.style.transform = `rotate(${e.pageX / 2}deg) rotate(${e.pageY / -2}deg)`;
+                velocityX = (e.pageX - offsetX - lastLeft) * 0.1;
+                lastLeft = e.pageX - offsetX;
+            }
+        });
+
+        document.addEventListener("mouseup", function(){
+            if (isDragging) {
+                lastLeft = text.offsetLeft;
+                lastTop = text.offsetTop;
+                velocityY = 10;
+            }
+            isDragging = false;
+        });
+
+        function animate() {
+            if (!isDragging) {
+                velocityY -= gravity;
+
+                text.style.left = (lastLeft + velocityX) + 'px';
+                text.style.top = (lastTop - velocityY) + 'px';
+                
+                if (text.offsetTop + text.clientHeight >= window.innerHeight - 200) {
+                    velocityY = -velocityY * friction;
+                    text.style.top = (window.innerHeight - text.clientHeight - 200) + 'px';
+                }
+
+                if (Math.abs(velocityY) < velocityThreshold) {
+                    velocityX = 0;
+                }
+                
+                if (text.offsetTop <= 200) {
+                    velocityY = -velocityY * friction;
+                    text.style.top = '200px';
+                }
+                
+                if (text.offsetLeft + text.clientWidth >= window.innerWidth - 200) {
+                    velocityX = -velocityX * friction;
+                    text.style.left = (window.innerWidth - text.clientWidth - 200) + 'px';
+                }
+                
+                if (text.offsetLeft <= 200) {
+                    velocityX = -velocityX * friction;
+                    text.style.left = '200px';
+                }
+                
+                lastLeft = text.offsetLeft;
+                lastTop = text.offsetTop;
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

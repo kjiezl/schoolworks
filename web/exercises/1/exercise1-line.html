@@ -16,6 +16,13 @@
                 animation: animateColor 5s linear infinite;
             }
 
+            p{
+                font-size: 5em;
+                margin-top: 20%;
+                color: #0f0;
+                animation: animateColor 5s linear infinite;
+            }
+
             @keyframes animateColor{
                 0%{
                     filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 15px #0f0) hue-rotate(0deg);
@@ -30,7 +37,7 @@
             }
         </style>
 
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             thisLeft = 0;
             moveID = 0;
             width = document.documentElement.clientWidth;
@@ -57,13 +64,17 @@
             function moveLine(){
                 moveID = setInterval(moveText, 0.1);
             }
-        </script>
+        </script> -->
     </head>
 
-    <body onload="moveLine()">
+    <body> <!--onload="moveLine()"> -->
         <div>
-            <p id="lineDiv" style="position:relative;">
+            <!-- <p id="lineDiv" style="position:relative;">
                 HELLO WORLD
+            </p>
+            <br> -->
+            <p>
+                <marquee behavior="alternate" scrollamount="55">HELLO WORLD</marquee>
             </p>
         </div>
     </body>
