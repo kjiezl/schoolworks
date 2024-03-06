@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  #game {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+  }
+  
+  #player {
+    position: absolute;
+    left: 0;
+    top: 1;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+  }
+  
+  .platform {
+    position: absolute;
+    left: 1600px;
+    top: 800px;
+    width: 600px;
+    height: 20px;
+    background-color: grey;
+  }
+  

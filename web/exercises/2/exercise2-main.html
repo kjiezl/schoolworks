@@ -1,0 +1,155 @@
+<html>
+<html lang="en-us">
+
+    <head>
+        <title>kwenn heheh</title>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            #gifBG{
+                margin: 0;
+                padding: 0;
+                background: url("bg.gif") no-repeat;
+                background-size: cover;
+                background-position: 0%;
+            }
+
+            h1:hover{
+                cursor: default;
+                user-select: none;
+            }
+
+            h1{
+                color: white;
+                font-family: "Poppins", sans-serif;
+                font-size: 3em;
+                filter: drop-shadow(0 0 5px #000);
+            }
+
+            .container{
+                height: 200px;
+                position: relative;
+                padding: 10px;
+                padding-top: 30px;
+                text-align: center;
+                position: fixed;
+                left: 50%;
+                top: 30%;
+                transform: translate(-50%, -50%);
+                width: 1000px;
+                height: 400px;
+            }
+
+            button{
+                color:white;
+                background-color: rgb(37, 182, 37);
+                font-size: 2em;
+                font-family: "Poppins", sans-serif;
+                transition: font-size 0.2s;
+                border-color: rgb(37, 182, 37);
+                padding: 10px;
+            }
+
+            button:hover{
+                background-color: rgb(179, 255, 179);
+                color:rgb(37, 182, 37);
+                cursor:pointer;
+            }
+
+            #buttonText2{
+                background-color: rgb(197, 66, 49);
+                border-color: rgb(197, 66, 49);
+            }
+
+            #buttonText2:hover{
+                background-color: rgb(255, 171, 159);
+                color: rgb(197, 66, 49);
+            }
+
+            #button3{
+                opacity: 0;
+            }
+
+            #solid{
+                background-color: rgba(0, 0, 0, 0.3);
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0%;
+                top: 0%;
+            }
+
+        </style>
+
+        <script>
+            textCount = 0;
+
+            const texts = [
+                "",
+                "sure ka sir?",
+                "final najud?"
+            ];
+
+            const imgs = [
+                "puppy-eyes-trans.png",
+                "hmm-trans.png",
+                "ohno-trans.png"
+            ];
+
+            const gifs = [
+                "url('bg.gif')",
+                "url('bg2.gif')",
+                "url('bg3.gif')",
+                "url('bg4.gif')"
+            ];
+
+            function hmm(){
+                textCount++;
+                buttonText = document.querySelector('#buttonText');
+                buttonText2 = document.querySelector('#buttonText2');
+                button3 = document.querySelector('#button3');
+                pic = document.querySelector('#pic');
+                buttons = document.querySelector('#buttons');
+                text = document.querySelector('#text');
+                gif = document.querySelector('#gifBG');
+
+                for(let i = 0; i < texts.length; i++){
+                    buttonText.style.fontSize= 2 + textCount * 3 + "em";
+                    buttonText2.innerHTML=texts[textCount];
+                    pic.src=imgs[textCount];
+                    gifBG.style.background = gifs[textCount];
+                    gifBG.style.backgroundSize = "cover";
+
+                    if(textCount == 2){
+                        text.style.fontStyle = "normal";
+                    }
+                }
+
+                if(textCount > texts.length - 1){
+                    buttons.innerHTML="";
+                    pic.style.opacity = 0;
+                    text.innerHTML="mangutana ko balik...";
+                    button3.style.opacity = 1;
+                    document.querySelector('#solid').style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+                }
+            }
+        </script>
+    </head>
+
+    <body id="gifBG">
+        <div id="solid"></div>
+        <div class="container">
+            <img id="pic" src="puppy-eyes-trans.png" width="300px">
+            <h1 id="text">Sir papasaron mi nimo?</h1>
+            <div id="buttons">
+                <a href="exercise2-yay.html"><button id="buttonText">OF COURSE :)</button></a><br><br>
+                <button id="buttonText2" title="sure ka?" onclick="hmm()">hmmm</button>
+            </div>
+
+            <div>
+                <a href="exercise2.html"><button id="button3">unsa man?</button></a>
+            </div>
+        </div>
+    </body>
+</html>
