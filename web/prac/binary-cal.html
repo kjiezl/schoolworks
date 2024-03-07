@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Binary Calculator</title>
+
+        <style>
+            .container{
+                padding: 10px;
+                padding-top: 30px;
+                text-align: center;
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 400px;
+                height: 500px;
+            }
+        </style>
+
+        <script>
+
+            function restrictNums(event){
+                if(event.key === '1' || event.key === '0' || event.key === "Backspace"
+                 || event.code === "ArrowLeft" || event.code === "ArrowRight"){
+                    return true;
+                } else{
+                    event.preventDefault();
+                    return false;
+                }
+            }
+
+            function displayNum(input){
+
+                let decimalVal = 0;
+                let base = 1;
+
+                for(let i = input.value.length -1; i >= 0; i--){
+                    if(input.value[i] === '1'){
+                        decimalVal += base;
+                    }
+                    base *= 2;
+                }
+                
+                if(input.value === ''){
+                    document.querySelector('#ans').innerHTML = "";
+                } else{
+                    document.querySelector('#ans').innerHTML = decimalVal;
+                }
+
+            }
+        </script>
+
+    </head>
+   
+    <body>
+        <div class="container">
+            <div>
+                <h1 style="position:absolute; margin: 20px;">BINARY CALCULATOR</h1>
+            </div>
+            <div>
+                <div style="position:absolute; top: 20%; left: 12%">
+                    <p style="position: relative;">Enter any binary number:</p>
+                    <input oninput="displayNum(this)" onkeypress="restrictNums(event)" style="padding: 10px; text-align: center; font-size: 1.5em;">
+                </div>
+
+                <div style="position:absolute; top: 45%;">
+                    <p style="position: fixed; left:0; right: 0; text-align: center;">Result:</p><br><br>
+                    <h1 id="ans" style="position: fixed; left:0; right:0; text-align: center; padding: 5px;"></h1>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
