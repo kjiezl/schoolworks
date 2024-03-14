@@ -1,0 +1,282 @@
+<!-- ISSUE: Does not calculate negative numbers input -->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Basic Calculator</title>
+
+        <style>
+            body{
+                background-color: #111;
+            }
+            .calculator{
+                top: 20%;
+                position: relative;;
+                width: 300px;
+                margin: 50px auto;
+                border: 5px solid white;
+                padding: 10px;
+                background-color: #111;
+            }
+            #display{
+                width: 100%;
+                height: 100px;
+                font-size: 40px;
+                font-weight: bold;
+                font-family: monospace;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                padding: 10px;
+                background-color:darkcyan;
+                pointer-events: none;
+            }
+            .keys{
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 5px;
+            }
+            button{
+                font-family: monospace;
+                padding: 10px;
+                font-size: 30px;
+                cursor: pointer;
+                background-color:cadetblue;
+                font-weight: bold;
+                border-color:aquamarine;
+            }
+            button:hover{
+                background-color: rgb(38, 85, 116);
+            }
+            #equals{
+                background-color: cornflowerblue;
+            }
+            #equals:hover{
+                background-color: rgb(42, 79, 150);
+            }
+            h1{
+                position: absolute;
+                color: white;
+                left: 5%;
+                font-family: monospace;
+                font-size: 3em;
+                pointer-events: none;
+                cursor: default;
+            }
+            p{
+                position: absolute;
+                color: white;
+                font-family: monospace;
+                font-size: 2em;
+                left: 5%;
+                top: 15%;
+                pointer-events: none;
+            }
+        </style>
+    </head>
+
+    <body onkeypress="restrictNums(event)">
+        <div>
+            <h1>KEYBOARD SHORTCUTS</h1>
+            <p>[ + ] - ADD<br>
+               [ - ] - SUBTRACT<br>
+               [ * ] - MULTIPLY<br>
+               [ / ] - DIVIDE<br>
+               [ . ] - DECIMAL<br>
+               [ ^ ] - EXPONENT<br>
+               [ ? ] - SQUARE ROOT<br><br><br>
+               [ D ] - DELETE<br>
+               [ C ] - CLEAR<br>
+               [ Enter ] - EQUALS<br>
+            </p>
+        </div>
+        <div class="calculator">
+            <input type="text" id="display" readonly>
+
+            <div class="keys">
+                <button onclick="appendThis(this)">7</button>
+                <button onclick="appendThis(this)">8</button>
+                <button onclick="appendThis(this)">9</button>
+                <button onclick="appendThis(this)">+</button>
+                <button onclick="appendThis(this)">4</button>
+                <button onclick="appendThis(this)">5</button>
+                <button onclick="appendThis(this)">6</button>
+                <button onclick="appendThis(this)">-</button>
+                <button onclick="appendThis(this)">1</button>
+                <button onclick="appendThis(this)">2</button>
+                <button onclick="appendThis(this)">3</button>
+                <button onclick="appendThis(this)">*</button>
+                <button onclick="appendThis(this)">0</button>
+                <button onclick="appendThis(this)">√</button>
+                <button id="sup" onclick="appendThis(this)">x<sup>2</sup></button>
+                <button onclick="appendThis(this)">/</button>
+                <button onclick="appendThis(this)">.</button>
+                <button onclick="deleteChar()" style="font-size: 25px">DEL</button>
+                <button onclick="clearDisplay()">C</button>
+                <button id="equals" onclick="calculate()">=</button>
+            </div>
+        </div>
+
+        <script>
+            function restrictNums(event){
+                const validKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-']
+                for(let i = 0; i < 11; i++){
+                    if(event.key == validKeys[i] || event.key === '+' || event.key === '/' || event.key === '*' 
+                    || event.key === 'Enter' || event.key === 'd' || event.key === '^' || event.key === '?' || event.key === 'c' || event.key === '.'){
+                        if(event.key === '+'){
+                            display.value += '+';
+                            return false;
+                        }
+                        if(event.key === '/'){
+                            display.value += '/';
+                            return false;
+                        }
+                        if(event.key === '*'){
+                            display.value += '*';
+                            return false;
+                        }
+                        if(event.key === '.'){
+                            display.value += '.';
+                            return false;
+                        }
+                        if(event.key === 'Enter'){
+                            calculate();
+                            return false;
+                        }
+                        if(event.key === 'd'){
+                            deleteChar();
+                            return false;
+                        }
+                        if(event.key === 'c'){
+                            clearDisplay();
+                            return false;
+                        }
+                        if(event.key === '?'){
+                            display.value += '√';
+                            return false;
+                        }
+                        else{
+                            display.value += event.key;
+                            return false;
+                        }
+                    } else{
+                        event.preventDefault();
+                    }
+                }
+            }
+
+            let display = document.querySelector('#display')
+    
+            function appendThis(obj){
+                let sup = document.querySelector('#sup');
+
+                if(display.value == "Error"){
+                    display.value = '';
+                }
+
+                if(obj === sup){
+                    display.value += '^2';
+                } else{
+                    display.value += obj.innerText;
+                }
+                // console.log(display.value);
+            }
+
+            function deleteChar() {
+                if(display.value === "Error"){
+                    display.value = '';
+                } else{
+                    display.value = display.value.slice(0, -1);
+                }
+            }
+
+            function calculate() {
+                let inp = display.value;
+                let nums = [];
+                let ops = [];
+                let num = '';
+
+                for (let i = 0; i < inp.length; i++) {
+                    if (inp[i] === '+' || inp[i] === '-' || inp[i] === '*' || inp[i] === '/' || inp[i] === '^' || inp[i] === '√') {
+                        if (inp[i] === '√') {
+                            nums.push('1');
+                        }
+                        ops.push(inp[i]);
+                        if (num !== '') {
+                            nums.push(parseFloat(num));
+                            num = '';
+                        }
+                    } else {
+                        num += inp[i];
+                    }
+                }
+
+                if (num !== '') {
+                    nums.push(parseFloat(num));
+                }
+
+                if (nums.length !== ops.length + 1) {
+                    display.value = 'Error';
+                    return;
+                }
+
+                for (let i = 0; i < ops.length; i++) {
+                    if (ops[i] === '^') {
+                        nums[i] = Math.pow(nums[i], nums[i + 1]);
+                        nums.splice(i + 1, 1);
+                        ops.splice(i, 1);
+                    }
+                }
+
+                for (let i = 0; i < ops.length; i++) {
+                    if (ops[i] === '√') {
+                        nums[i] = Math.sqrt(nums[i + 1]);
+                        ops.splice(i, 1);
+                    }
+                }
+
+                for (let i = 0; i < ops.length; i++) {
+                    if (ops[i] === '*') {
+                        nums[i] *= nums[i + 1];
+                        nums.splice(i + 1, 1);
+                        ops.splice(i, 1);
+                        i--;
+                    } else if (ops[i] === '/') {
+                        if (nums[i + 1] === 0) {
+                            display.value = 'Error';
+                            return;
+                        }
+                        nums[i] /= nums[i + 1];
+                        nums.splice(i + 1, 1);
+                        ops.splice(i, 1);
+                        i--;
+                    }
+                }
+
+                let ans = nums[0];
+                for (let i = 0; i < ops.length; i++) {
+                    let n = nums[i + 1];
+                    let ope = ops[i];
+
+                    switch (ope) {
+                        case '+':
+                            ans += n;
+                            break;
+                        case '-':
+                            ans -= n;
+                            break;
+                        default:
+                            display.value = 'Error';
+                            return;
+                    }
+                }
+
+                display.value = ans;
+            }
+            
+            function clearDisplay(){
+                display.value = '';
+            }
+        </script>
+    </body>
+</html>
