@@ -119,10 +119,9 @@
 
         <script>
             function restrictNums(event){
-                const validKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-']
-                for(let i = 0; i < 11; i++){
-                    if(event.key == validKeys[i] || event.key === '+' || event.key === '/' || event.key === '*' 
-                    || event.key === 'Enter' || event.key === 'd' || event.key === '^' || event.key === '?' || event.key === 'c' || event.key === '.'){
+                const validKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', '/', '*', '^', '?', 'c', 'd', '.', 'Enter']
+                for(let i = 0; i < validKeys.length; i++){
+                    if(event.key == validKeys[i]){
                         if(event.key === '+'){
                             display.value += '+';
                             return false;
