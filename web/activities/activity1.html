@@ -1,0 +1,78 @@
+<html>
+<head>
+    <title>ACTIVITY 1</title>
+
+    <style>
+        button{
+            position: absolute;
+        }
+
+        #textID{
+            position: absolute;
+            font-size: 3em;
+            background-color: black;
+            border: 5px solid black;
+            padding: 50px;
+        }
+    </style>
+
+    <script>
+        let thisLeft = 0;
+        let thisTop = 0;
+        let state = 1;
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let moveID = 0;
+
+        let goRight = true;
+        let goDown = false;
+        let goLeft = false;
+        let goUp = false;
+
+        function moveText(){
+            let thisText = document.querySelector('#textID');
+
+            if(goRight && thisLeft >= 500){
+                goDown = true;
+                goRight = false;
+            } else if(goDown && thisTop >= 500){
+                goDown = false;
+                goLeft = true;
+            } else if(goLeft && thisLeft <= 0){
+                goLeft = false;
+                goUp = true;
+            } else if(goUp && thisTop <= 0){
+                goUp = false;
+                goRight = true;
+            }
+
+            if(goRight){
+                thisLeft += 1;
+            } else if(goDown){
+                thisTop += 1;
+            } else if(goLeft){
+                thisLeft -= 1;
+            } else if(goUp){
+                thisTop -= 1;
+            }
+
+            thisText.style.left = thisLeft + "px";
+            thisText.style.top = thisTop + "px";
+        }
+
+        function startMove(){
+            moveID = setInterval(moveText, 0.05);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button onclick="startMove()">CLICK HERE</button>
+    </div>
+    <div>
+        <br>
+        <p id="textID"> hello</p>
+    </div>
+
+</body>
+</html> 

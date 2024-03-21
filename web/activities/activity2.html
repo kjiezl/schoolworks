@@ -1,0 +1,212 @@
+<head>
+    <link rel="stylesheet" href="activity2.css">
+    <title>ACTIVITY 2</title>
+
+    <script type="text/javascript">
+        let networkCount = []
+        let promoCount = []
+        let amountCount = []
+
+
+        function showLogs() {
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('table').style.display = 'block';
+            document.getElementById('netTable').style.display = 'none';
+            document.getElementById('promoTable').style.display = 'none';
+        }
+
+        function showStats() {
+            document.getElementById('table').style.display = 'none';
+            document.getElementById('content').style.display = 'none';
+            document.getElementById('netTable').style.display = 'block';
+            document.getElementById('promoTable').style.display = 'block';
+        }
+
+        function enterKey(event){
+            if(event.key === 'Enter'){
+                let inp = document.querySelector('#input').value;
+                let sel = document.querySelector('#network').value;
+                let err = document.querySelector('#errorText');
+                if(sel === "default" || inp === ""){
+                    err.style.opacity = "1";
+                }else{
+                    err.style.opacity = "0";
+                    displayInps();
+                }
+            } else{
+                return true;
+            }
+        }
+
+        function displayInps(){
+            let table = document.querySelector('#table');
+            let row = table.insertRow(-1);
+            let inp = document.querySelector('#input').value;
+            let sel = document.querySelector('#network').value;   
+
+            // let [promoType, amount] = inp.split(' ');
+
+            if(inp.includes(' ')){
+                [promoType, amount] = inp.split(' ');
+            } else {
+                promoType = inp.replace(/[0-9]/g, '');
+                amount = inp.replace(/[^0-9]/g, '');
+            }
+
+            table.style.opacity = "1";
+
+            let c1 = row.insertCell(0);
+            c1.innerHTML = sel;
+            updateCount(sel, networkCount);
+
+            let c2 = row.insertCell(1);
+            c2.innerHTML = promoType;
+            updateCount(promoType, promoCount);
+
+            let c3 = row.insertCell(2);
+            c3.innerHTML = amount;
+            updateCount(amount, amountCount);
+
+            let c4 = row.insertCell(3);
+            c4.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
+
+            displayCount();
+            clearInp();
+        }
+
+        function deleteRow(btn) {
+            let row = btn.parentNode.parentNode;
+            let network = row.cells[0].innerHTML;
+            let promo = row.cells[1].innerHTML;
+            let amount = row.cells[2].innerHTML;
+
+            if (network in networkCount) {
+                networkCount[network]--;
+                if (networkCount[network] <= 0) {
+                    delete networkCount[network];
+                }
+            }
+        
+            if (promo in promoCount) {
+                promoCount[promo]--;
+                if (promoCount[promo] <= 0) {
+                    delete promoCount[promo];
+                }
+            }
+        
+            row.parentNode.removeChild(row);
+            displayCount();
+        }
+
+
+        function updateCount(i, arr){
+            if(i in arr){
+                arr[i]++;
+            } else{
+                arr[i] = 1;
+            }
+        }
+
+        function displayCount(){
+            let netTable = document.querySelector('#netTable');
+            let promoTable = document.querySelector('#promoTable');
+
+            promoTable.innerHTML = '<tr><th style="color: #FB667A; font-size: 2.5em;">Promo</th></tr>';
+
+            for (let key in networkCount) {
+                let row = netTable.querySelector('tr[value="' + key + '"]');
+                if (row) {
+                    row.cells[1].textContent = networkCount[key];
+                }
+            }
+        
+            for (let key in promoCount) {
+                let row = promoTable.insertRow(-1);
+                let cell1 = row.insertCell(0);
+                cell1.textContent = key;
+                let cell2 = row.insertCell(1);
+                cell2.textContent = promoCount[key];
+            }
+        }
+
+        function clearInp(){
+            document.querySelector('#input').value = "";
+            document.querySelector('#network').value = "default";
+        }
+    </script>
+</head>
+
+<body onkeypress="enterKey(event)">
+    <div id="sidebar">
+        <a href="#" onclick="showLogs()">Logs</a>
+        <a href="#" onclick="showStats()">Stats</a>
+    </div>
+    <div id="content">
+        <br><h1><span style="color: #FFF842;">Purchased Load</span> History</h1>
+        <div>
+            <p id="errorText" style="opacity: 0;">* Please enter all fields</p>
+            <form>
+                <select name="net" id="network" required>
+                  <option value = "default">Select Network</option>
+                  <option value="globe">Globe</option>
+                  <option value="smart">Smart</option>
+                  <option value="tm">TM</option>
+                  <option value="tnt">TNT</option>
+                  <option value="dito">Dito</option>
+                  <option value="gomo">GOMO</option>
+                </select>
+                <br><br>
+              </form>
+        </div>
+        <div id="inputBox">
+            <input type="text" placeholder="Enter Promo" inp="inp" id="input" required><br><br>
+            <label for="inp" class="inpLabel">Enter Promo</label>
+        </div>
+    </div><br>
+    <div class="container">
+        <table id="table" style="opacity: 0;">
+            <tr>
+                <th>NETWORK</th>
+                <th>PROMO</th>
+                <th>AMOUNT</th>
+            </tr>
+        </table>
+    </div>
+    <div class="container2">
+        <table style="display:none" id="netTable">
+            <tr>
+                <th style="color: #FB667A; font-size: 2.5em;">Network</th>
+            </tr>
+            <tr value="globe">
+                <td>globe</td>
+                <td>0</td>
+            </tr>
+            <tr value="smart">
+                <td>smart</td>
+                <td>0</td>
+            </tr>
+            <tr value="tm">
+                <td>tm</td>
+                <td>0</td>
+            </tr>
+            <tr value="tnt">
+                <td>tnt</td>
+                <td>0</td>
+            </tr>
+            <tr value="dito">
+                <td>dito</td>
+                <td>0</td>
+            </tr>
+            <tr value="gomo">
+                <td>gomo</td>
+                <td>0</td>
+            </tr>
+        </table>
+
+        <table style="display:none" id="promoTable">
+            <tr>
+                <th style="color: #FB667A; font-size: 2.5em;">Promo</th>
+            </tr>
+        </table>
+    </div>
+</body>
