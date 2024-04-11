@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+   <link rel="stylesheet" href="temp.css">
+   <script src="temp.js"></script>
+
+    <title>Dice Game</title>
+</head>
+<body>
+    <i class="fa-solid fa-house" onclick="goToInitialDisplay()"></i>
+    
+<h1 style="color:#fff;" id="first">Lucky Dice Rolls</h1>
+
+<h1 id="mode1Text" style="color:#fff; text-align: center; display: none;">Test Your luck </h1>
+
+
+
+<div class="container" id="diceGameContainer" style="display: none;">
+
+    <div class="dice-container">
+        
+        <div class="dice">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+        </div>
+        
+    </div>
+
+</div>
+
+
+<div class="container2" id="diceGameContainer2" style="display: none;">
+
+    <div class="dice-container2">
+        
+        <div class="dice">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+        </div>
+        
+    </div>
+
+</div>
+
+<div class="button-container" id="modeButtons">
+    <button onclick="toggleDiceGame()" class="button">Practice</button>
+    <button onclick="toggleDice()" class="button">mode 2</button>
+    <button onclick="toggleGame()" class="button">mode 3</button>
+</div>
+
+<input id="hello" type="number" value="1" max="4" style="display: none;">
+<button id="clickable" style="display: none;" onclick="generateDice()">Roll</button>
+<button id="resetButton" style="display: none;" onclick="resetTotal()">Reset Total</button>
+
+
+</body>
+</html>
