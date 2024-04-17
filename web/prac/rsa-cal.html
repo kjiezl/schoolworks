@@ -1,0 +1,115 @@
+<head>
+    <title>RSA Algorithm Calculator</title>
+
+    <style>
+        body{
+            background-color: #111;
+        }
+        .container{
+            padding: 10px;
+            padding-top: 30px;
+            text-align: center;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 500px;
+            font-family: monospace;
+            font-size: 1.5em;
+            color: white;
+        }
+        .results{
+            text-align: left;
+            display: none;
+        }
+        input{
+            font-family: monospace;
+            font-size: 1.5em;
+            width: 300px;
+            padding: 5px;
+        }
+        button{
+            padding: 10px;
+            font-family: monospace;
+            font-size: 1.5em;
+        }
+        button:hover{
+            color: white;
+            background-color: #222;
+            transition: background-color 0.2s, color 0.2s;
+        }
+    </style>
+
+    <script>
+        function getRSA(){
+            document.querySelector(".results").style.display = "block";
+            p = document.querySelector("#p").value;
+            q = document.querySelector("#q").value;
+            e = document.querySelector("#e").value;
+            pt = document.querySelector("#pt").value;
+
+            // step 1
+            document.querySelector("#pDisplay").textContent = p;
+            document.querySelector("#qDisplay").textContent = q;
+
+            // step 2
+            let n = 0;
+            n = p * q;
+            document.querySelector("#nDisplay").textContent = n;
+
+            // step 3
+            let deltaN = 0;
+            deltaN = ((p - 1) * (q - 1));
+            document.querySelector("#deltaNDisplay").textContent = deltaN;
+         
+            // step 4
+            document.querySelector("#eDisplay").textContent = e;
+
+            // step 5
+            let d = 0;
+            for(let i = deltaN; i > 0; i--){
+                if(Number.isInteger(((deltaN * [i]) + 1) / e)){
+                    d = (((deltaN * [i]) + 1) / e);
+                    // console.log("i: " + i + " at " + (((deltaN * [i]) + 1) / e));
+                }
+            }
+            document.querySelector("#dDisplay").textContent = d;
+
+            // step 6
+            document.querySelector("#publicKeyDisplay").textContent = "{" + e + ", " + n + "}";
+            document.querySelector("#privateKeyDisplay").textContent = "{" + d + ", " + n + "}";
+
+            // step 7
+            let ct = 0;
+            ct = (pt ** e) % n;
+            document.querySelector("#ctDisplay").textContent = ct;
+            
+            // step 8
+            document.querySelector("#ptDisplay").textContent = pt;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <label>P: </label><input id="p"><br><br>
+            <label>Q: </label><input id="q"><br><br>
+            <label>E: </label><input id="e"><br><br>
+            <label>PT: </label><input id="pt"><br><br>
+            <button id="button" onclick="getRSA()">SOLVE</button>
+        </div>
+        <br>
+        <div class="results">
+            <div>1.) P = <span id="pDisplay"></span>, Q = <span id="qDisplay"></span></div>
+            <div>2.) n = <span id="nDisplay"></span></div>
+            <div>3.) deltaN = <span id="deltaNDisplay"></span></div>
+            <div>4.) E = <span id="eDisplay"></span></div>
+            <div>5.) d = <span id="dDisplay"></span></div>
+            <div>6.) Public key = <span id="publicKeyDisplay"></span>, Private key = <span id="privateKeyDisplay"></span></div>
+            <div>7.) CT = <span id="ctDisplay"></span></div>
+            <div>8.) PT = <span id="ptDisplay"></span></div>
+        </div>
+    </div>
+</body>
