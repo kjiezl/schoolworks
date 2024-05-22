@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Print My Name</title>
+</head>
+<body>
+	<label style="padding: 10px;">Name: </label><input type="text" id="val"><br><br>
+	<label style="padding: 7px;">Repeat: </label><input type="number" id="repeat"><br><br>
+	<label style="padding: 7px;">Color: </label><input type="text" id="color"><br><br>
+	<button style="width:225px;height: 50px" onclick="clearOutput(); printName(val.value, repeat.value, color.value)">PRINT</button>
+	<h1 id='output'></h1>
+</body>
+<script type="text/javascript">
+	const clearOutput = () => {
+		output.innerHTML = "";
+	};
+
+	const printName = (name, count, color) => {
+		if (count > 0) {
+            output.style.color = color;
+			output.innerHTML += name + "<br>";
+			printName(name, --count);
+		}
+	};
+</script>
+</html>
